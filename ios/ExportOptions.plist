@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>method</key>
+    <string>app-store</string>
+    <key>teamID</key>
+    <string>R68DHC2YC8</string>  <!-- Replace with your 10-char Team ID from Apple portal -->
+    <key>entitlements</key>
+    <dict>
+        <key>aps-environment</key>
+        <string>production</string>
+        <key>com.apple.developer.associated-domains</key>
+        <array>
+            <string>applinks:cathsapp.ng</string>
+        </array>
+    </dict>
+</dict>
+</plist>

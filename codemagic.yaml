@@ -4,14 +4,14 @@ workflows:
     max_build_duration: 120
     instance_type: mac_mini_m2 # Optimal for performance in 2026
     integrations:
-      app_store_connect: ios-certificate # Your API key reference
+      app_store_connect: Pworld Concept Apple Key # Your API key reference
     environment:
       flutter: stable # Matches your 3.27.0 stable; update to specific if needed
       ios_signing:
         certificates:
           - ios-certificate # Your cert reference
         provisioning_profiles:
-          - Pworld AppStore # Use AppStore for TestFlight; swap to Pworld Adhoc for internal
+          - Pworld Caths App AppStore # Use AppStore for TestFlight; swap to Pworld Adhoc for internal
       vars:
         APP_STORE_APPLE_ID: 6755465568 # Your Apple App ID for build numbering
     scripts:
@@ -25,7 +25,7 @@ workflows:
       - name: Build IPA with auto-incremented version
         script: |
           BUILD_NUMBER=$(($(app-store-connect get-latest-app-store-build-number "$APP_STORE_APPLE_ID") + 1))
-          flutter build ipa --release --build-number=$BUILD_NUMBER
+          flutter build ipa --release --build-number=$BUILD_NUMBER --export-options-plist=ios/ExportOptions.plist
     artifacts:
       - build/ios/ipa/*.ipa # Downloadable signed IPA
       - /tmp/xcodebuild_logs/*.log # For debugging signing/entitlements
