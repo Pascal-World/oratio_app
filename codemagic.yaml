@@ -4,7 +4,7 @@ workflows:
     max_build_duration: 120
     instance_type: mac_mini_m2 # Optimal for performance in 2026
     integrations:
-      app_store_connect: ios-certificate # Your API key reference
+      app_store_connect: Pworld Concept Apple Key # Your API key reference
     environment:
       flutter: stable # Matches your 3.27.0 stable; update to specific if needed
       ios_signing:
