@@ -1,11 +1,11 @@
 // message_cubit.dart
 import 'dart:async';
 import 'dart:convert';
-import 'dart:isolate';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:oratio_app/services/chat/db/chat_hive.dart';
+import 'package:oratio_app/services/reporting_service.dart';
 import 'package:pocketbase/pocketbase.dart';
 import 'package:uuid/uuid.dart';
 
@@ -41,51 +41,36 @@ class MessageCubit extends Cubit<MessageState> {
   MessageCubit({
     required this.repository,
     required this.pb,
-  }) : super(MessageState()) {
-    _initMessageSubscription();
-  }
+  }) : super(MessageState());
 
-  void _initMessageSubscription() async {
-    if (!pb.authStore.isValid) return;
-    final currentUserId = pb.authStore.model.id;
-    await pb.collection('messages').subscribe(
-      '*',
-      (e) {
-        if (e.action == 'create' && e.record != null) {
-          if (e.record?.getStringValue("sender") == currentUserId.toString()) {
-            return;
-          }
-          final message = MessageModel.fromPocketBase(e.record!);
-          _handleNewMessage(message);
-        }
-      },
-      filter: 'sender.id = "$currentUserId" || reciever.id = "$currentUserId"',
-    );
-  }
+  // Removed global subscription - each chat page handles its own subscription
+  // void _initMessageSubscription() async {
+  //   if (!pb.authStore.isValid) return;
+  //   final currentUserId = pb.authStore.model.id;
+  //   await pb.collection('messages').subscribe(
+  //     '*',
+  //     (e) {
+  //       if (e.action == 'create' && e.record != null) {
+  //         if (e.record?.getStringValue("sender") == currentUserId.toString()) {
+  //           return;
+  //         }
+  //         final message = MessageModel.fromPocketBase(e.record!);
+  //         _handleNewMessage(message);
+  //       }
+  //     },
+  //     filter: 'sender.id = "$currentUserId" || reciever.id = "$currentUserId"',
+  //   );
+  // }
 
   void _unsubscribe() {
     pb.collection('messages').unsubscribe();
   }
 
-  static Future<void> _recieveMessages(List args) async {
-    final messages = args.first as List<MessageModel>;
-    final repository = args[1] as MessageRepository;
-    final pb = args[2] as PocketBase;
-    for (var msg in messages) {
-      if (!msg.received) {
-        repository.messageBox.add(msg);
-        await pb
-            .collection("messages")
-            .update(msg.id, body: {"received": true});
-      }
-    }
-  }
-
-  Future<void> loadMessages(String otherUserId) async {
+  Future<void> loadMessages(String otherUserId, {bool showLoading = false}) async {
     try {
-      emit(state.copyWith(isLoading: true));
-
+      // Don't emit loading state to prevent flickering
       if (!pb.authStore.isValid) return;
+
       final response = await pb.collection('messages').getFullList(
             sort: '-created',
             filter:
@@ -97,9 +82,11 @@ class MessageCubit extends Cubit<MessageState> {
       emit(state.copyWith(
         messages: messages,
         isLoading: false,
+        error: null,
       ));
-      // make code run in an isolate
-      Isolate.spawn(_recieveMessages, [messages, repository, pb]);
+
+      // Mark messages as received directly (removed isolate)
+      await _markMessagesAsReceived(messages);
 
       // Cache messages
       await _cacheMessages(otherUserId, messages);
@@ -111,21 +98,28 @@ class MessageCubit extends Cubit<MessageState> {
     }
   }
 
+  Future<void> _markMessagesAsReceived(List<MessageModel> messages) async {
+    try {
+      for (var msg in messages) {
+        if (!msg.received) {
+          repository.messageBox.add(msg);
+          await pb
+              .collection("messages")
+              .update(msg.id, body: {"received": true});
+        }
+      }
+    } catch (e) {
+      // Silently fail - not critical
+      print('Error marking messages as received: $e');
+    }
+  }
+
   Future<void> _cacheMessages(
       String userId, List<MessageModel> messages) async {
     final prefs = await SharedPreferences.getInstance();
     final encodedMessages =
         messages.map((msg) => jsonEncode(msg.toJson())).toList();
     await prefs.setStringList('cached_messages_$userId', encodedMessages);
-  }
-
-  Future<List<MessageModel>> _getCachedMessages(String userId) async {
-    final prefs = await SharedPreferences.getInstance();
-    final encodedMessages =
-        prefs.getStringList('cached_messages_$userId') ?? [];
-    return encodedMessages
-        .map((msg) => MessageModel.fromJson(jsonDecode(msg)))
-        .toList();
   }
 
   Future getSavedMessages(String otherUserId) async {
@@ -210,6 +204,10 @@ class MessageCubit extends Cubit<MessageState> {
       final updatedMessages = [message, ...state.messages];
       emit(state.copyWith(messages: updatedMessages));
     }
+  }
+
+  void clearMessages() {
+    emit(MessageState());
   }
 
   void logout() {

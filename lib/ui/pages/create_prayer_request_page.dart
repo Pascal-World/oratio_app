@@ -276,7 +276,8 @@ class _CreatePrayerRequestPageState extends State<CreatePrayerRequestPage> {
                                 _isUrgent = value;
                               });
                             },
-                            thumbColor: MaterialStatePropertyAll(AppColors.primary)
+                            activeThumbColor: Colors.amber[700],
+                            activeTrackColor: Colors.amber[200],
                           ),
                         ),
                       ],
