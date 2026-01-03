@@ -1,12 +1,10 @@
 {
-    "applinks":{
-        "details":[
-            {
-                "appId":"TEAMID.com.acemedia.cathsapp",
-                "paths":[
-                    "/app/*"
-                ]
-            }
-        ]
+    "applinks": {
+        "details": [{
+            "appId": "TEAMID.com.acemedia.caths-app",
+            "paths": [
+                "/app/*"
+            ]
+        }]
     }
 }

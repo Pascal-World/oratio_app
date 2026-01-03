@@ -9,7 +9,7 @@ workflows:
       flutter: stable # Or specific version, e.g., 3.27.0
       ios_signing:
         distribution_type: app_store # For TestFlight/App Store
-        bundle_identifier: com.example.myapp
+        bundle_identifier: com.acemedia.caths-app
       vars:
         APP_STORE_APPLE_ID: 1234567890 # Your app's Apple ID from App Store Connect
     scripts:
