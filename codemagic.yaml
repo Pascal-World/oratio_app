@@ -11,7 +11,7 @@ workflows:
         certificates:
           - ios-certificate # Your uploaded Distribution cert
         provisioning_profiles:
-          - Pworld Adhoc # Your uploaded Ad Hoc profile (for internal TestFlight)
+          - Pworld Caths App Adhoc # Your uploaded Ad Hoc profile (for internal TestFlight)
       vars:
         APP_STORE_APPLE_ID: 6755465568 # Your Apple App ID for build numbering
     scripts:
