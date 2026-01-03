@@ -8,10 +8,10 @@ workflows:
     environment:
       flutter: stable # Matches your 3.27.0 stable; update to specific if needed
       ios_signing:
-        distribution_type: app_store # For TestFlight/App Store
-        bundle_identifier: com.acemedia.caths-app # Your Bundle ID
-        certificate_name: ios-certificate # Your cert reference
-        provisioning_profile_name: Pworld AppStore # Use AppStore for TestFlight; swap to Pworld Adhoc for internal
+        certificates:
+          - ios-certificate # Your cert reference
+        provisioning_profiles:
+          - Pworld AppStore # Use AppStore for TestFlight; swap to Pworld Adhoc for internal
       vars:
         APP_STORE_APPLE_ID: 6755465568 # Your Apple App ID for build numbering
     scripts:
