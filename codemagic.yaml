@@ -1,35 +1,35 @@
 workflows:
   ios-workflow:
-    name: iOS Flutter Build & Deploy
-    max_build_duration: 120 # Minutes
-    instance_type: mac_mini_m2 # Optimal for 2025 performance
+    name: Caths App iOS Build & Deploy
+    max_build_duration: 120
+    instance_type: mac_mini_m2 # Optimal for performance in 2026
     integrations:
-      app_store_connect: your-api-key-name # From step 2
+      app_store_connect: ios-certificate # Your API key reference
     environment:
-      flutter: stable # Or specific version, e.g., 3.27.0
+      flutter: stable # Matches your 3.27.0 stable; update to specific if needed
       ios_signing:
         distribution_type: app_store # For TestFlight/App Store
-        bundle_identifier: com.acemedia.caths-app
+        bundle_identifier: com.acemedia.caths-app # Your Bundle ID
+        certificate_name: ios-certificate # Your cert reference
+        provisioning_profile_name: Pworld AppStore # Use AppStore for TestFlight; swap to Pworld Adhoc for internal
       vars:
-        APP_STORE_APPLE_ID: 1234567890 # Your app's Apple ID from App Store Connect
+        APP_STORE_APPLE_ID: 6755465568 # Your Apple App ID for build numbering
     scripts:
-      - name: Set up code signing
-        script: xcode-project use-profiles
       - name: Get Flutter dependencies
         script: flutter pub get
       - name: Install CocoaPods
-        script: find . -name "Podfile" -execdir pod install \;
-      - name: Build IPA with auto-versioning
         script: |
-          BUILD_NUMBER=$$ (( $$(app-store-connect get-latest-app-store-build-number "$APP_STORE_APPLE_ID") + 1))
-          flutter build ipa --release --build-name=1.0.0 --build-number=$BUILD_NUMBER
+          find . -name "Podfile" -execdir pod install \;
+      - name: Build IPA with auto-incremented version
+        script: |
+          BUILD_NUMBER=$(($(app-store-connect get-latest-app-store-build-number "$APP_STORE_APPLE_ID") + 1))
+          flutter build ipa --release --build-number=$BUILD_NUMBER
     artifacts:
-      - build/ios/ipa/*.ipa # Downloadable IPA
-      - /tmp/xcodebuild_logs/*.log # For debugging
+      - build/ios/ipa/*.ipa # Downloadable signed IPA
+      - /tmp/xcodebuild_logs/*.log # For debugging signing/entitlements
     publishing:
       app_store_connect:
-        auth: integration # Uses API key
-        submit_to_testflight: true # Upload to TestFlight
-        beta_groups: # Optional tester groups
-          - Internal Testers
-        submit_to_app_store: false # Set true for full release
+        auth: integration # Uses your API key
+        submit_to_testflight: true # Auto-upload to TestFlight
+        beta_groups: [] # Add groups like ["Internal Testers"] if needed
+        submit_to_app_store: false # Set true for full App Store submission
