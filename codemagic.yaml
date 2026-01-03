@@ -20,8 +20,10 @@ workflows:
       - name: Install CocoaPods
         script: |
           find . -name "Podfile" -execdir pod install \;
-      - name: Set up code signing # Applies cert/profile to override automatic signing
-        script: xcode-project use-profiles
+      - name: Set up code signing # NEW: Sets manual signing + applies profile
+        script: |
+          xcode-project set-signing-style --manual --project ios/Runner.xcodeproj
+          xcode-project use-profiles --project ios/Runner.xcodeproj
       - name: Build IPA with auto-incremented version
         script: |
           BUILD_NUMBER=$(($(app-store-connect get-latest-app-store-build-number "$APP_STORE_APPLE_ID") + 1))
