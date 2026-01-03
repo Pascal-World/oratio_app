@@ -4,12 +4,14 @@ workflows:
     max_build_duration: 120
     instance_type: mac_mini_m2 # Optimal for performance in 2026
     integrations:
-      app_store_connect: Pworld Concept Apple Key # Your API key reference
+      app_store_connect: Pworld Concept Apple Key # Your API key for publishing (not signing)
     environment:
       flutter: stable # Matches your 3.27.0 stable; update to specific if needed
       ios_signing:
-        distribution_type: app_store # Automatic: Fetches App Store profile/cert via API key
-        bundle_identifier: com.acemedia.caths-app # Required for fetching matching profile
+        certificates:
+          - ios-certificate # Your uploaded Distribution cert
+        provisioning_profiles:
+          - Pworld Adhoc # Your uploaded Ad Hoc profile (for internal TestFlight)
       vars:
         APP_STORE_APPLE_ID: 6755465568 # Your Apple App ID for build numbering
     scripts:
@@ -18,6 +20,10 @@ workflows:
       - name: Install CocoaPods
         script: |
           find . -name "Podfile" -execdir pod install \;
+      - name: Set up manual signing # Forces manual mode + applies profile/cert
+        script: |
+          xcode-project set-signing-style --manual --project ios/Runner.xcodeproj
+          xcode-project use-profiles --project ios/Runner.xcodeproj
       - name: Build IPA with auto-incremented version
         script: |
           BUILD_NUMBER=$(($(app-store-connect get-latest-app-store-build-number "$APP_STORE_APPLE_ID") + 1))
@@ -28,6 +34,6 @@ workflows:
     publishing:
       app_store_connect:
         auth: integration # Uses your API key
-        submit_to_testflight: true # Auto-upload to TestFlight
-        beta_groups: [] # Add groups like ["Internal Testers"] if needed
-        submit_to_app_store: false # Set true for full App Store submission
+        submit_to_testflight: true # Auto-upload to TestFlight (internal testers)
+        beta_groups: [] # Add ["Internal Testers"] if needed
+        submit_to_app_store: false # Not for Ad Hoc
