@@ -8,8 +8,6 @@ workflows:
     environment:
       flutter: stable # Matches your 3.27.0 stable; update to specific if needed
       ios_signing:
-        distribution_type: app_store # For TestFlight/App Store
-        bundle_identifier: com.acemedia.caths-app # Your Bundle ID
         certificates:
           - ios-certificate # Your cert reference
         provisioning_profiles:
@@ -22,8 +20,8 @@ workflows:
       - name: Install CocoaPods
         script: |
           find . -name "Podfile" -execdir pod install \;
-      - name: Set up code signing # NEW: Applies cert/profile to override automatic signing
-        script: xcode-project use-profiles --project ios/Runner.xcodeproj
+      - name: Set up code signing # Applies cert/profile to override automatic signing
+        script: xcode-project use-profiles
       - name: Build IPA with auto-incremented version
         script: |
           BUILD_NUMBER=$(($(app-store-connect get-latest-app-store-build-number "$APP_STORE_APPLE_ID") + 1))
