@@ -5,15 +5,23 @@
     <key>method</key>
     <string>app-store</string>
     <key>teamID</key>
-    <string>R68DHC2YC8</string>  <!-- Replace with your 10-char Team ID from Apple portal -->
+    <string>R68DHC2YC8</string>  <!-- e.g., R68DHC2YC8 from logs -->
+    <key>uploadBitcode</key>
+    <false/>
+    <key>uploadSymbols</key>
+    <true/>
+    <key>compileBitcode</key>
+    <false/>
     <key>entitlements</key>
     <dict>
         <key>aps-environment</key>
         <string>production</string>
+        <!-- Temporarily disabled Associated Domains for export; re-add after profile regen
         <key>com.apple.developer.associated-domains</key>
         <array>
             <string>applinks:cathsapp.ng</string>
         </array>
+        -->
     </dict>
 </dict>
 </plist>
