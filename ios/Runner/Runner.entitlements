@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
-<dict>
-	<!-- Temporarily disabled Push for export; re-add after profile regen
-	<key>aps-environment</key>
-	<string>production</string>
-	-->
-	<!-- Temporarily disabled Associated Domains for export; re-add after profile regen
-	<key>com.apple.developer.associated-domains</key>
-	<array>
-		<string>applinks:cathsapp.ng</string>
-	</array>
-	-->
-</dict>
+	<dict>
+		<!-- Temporarily disabled Push for export; re-add after profile regen -->
+		<key>aps-environment</key>
+		<string>production</string>
+
+		<!-- Temporarily disabled Associated Domains for export; re-add after profile regen -->
+		<key>com.apple.developer.associated-domains</key>
+		<array>
+			<string>applinks:cathsapp.ng</string>
+		</array>
+
+	</dict>
 </plist>
