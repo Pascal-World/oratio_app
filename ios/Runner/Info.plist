@@ -2,72 +2,72 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>CADisableMinimumFrameDurationOnPhone</key>
-	<true/>
-	<key>CFBundleDevelopmentRegion</key>
-	<string>$(DEVELOPMENT_LANGUAGE)</string>
-	<key>CFBundleDisplayName</key>
-	<string>CathsApp</string>
-	<key>CFBundleExecutable</key>
-	<string>$(EXECUTABLE_NAME)</string>
-	<key>CFBundleIdentifier</key>
-	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
-	<key>CFBundleInfoDictionaryVersion</key>
-	<string>6.0</string>
-	<key>CFBundleName</key>
-	<string>oratio_app</string>
-	<key>CFBundlePackageType</key>
-	<string>APPL</string>
-	<key>CFBundleShortVersionString</key>
-	<string>$(FLUTTER_BUILD_NAME)</string>
-	<key>CFBundleSignature</key>
-	<string>????</string>
-	<key>CFBundleVersion</key>
-	<string>$(FLUTTER_BUILD_NUMBER)</string>
-	<key>LSRequiresIPhoneOS</key>
-	<true/>
-	<key>NSBluetoothAlwaysUsageDescription</key>
-	<string>Bluetooth access is required for audio devices</string>
-	<key>NSBluetoothPeripheralUsageDescription</key>
-	<string>Bluetooth access is required for audio devices</string>
-	<key>NSCameraUsageDescription</key>
-	<string>Camera access is required for video calls and scanning</string>
-	<key>NSContactsUsageDescription</key>
-	<string>This app needs access to your contacts to help you connect with friends</string>
-	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>Location access is required for better service</string>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Location access is required for better service</string>
-	<key>NSMicrophoneUsageDescription</key>
-	<string>Microphone access is required for voice calls</string>
-	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Photo library access is required for selecting images</string>
-	<key>UIApplicationSupportsIndirectInputEvents</key>
-	<true/>
-	<key>UIBackgroundModes</key>
-	<array>
-		<string>remote-notification</string>
-	</array>
-	<key>UILaunchStoryboardName</key>
-	<string>LaunchScreen</string>
-	<key>UIMainStoryboardFile</key>
-	<string>Main</string>
-	<key>UIStatusBarHidden</key>
-	<true/>
-	<key>UISupportedInterfaceOrientations</key>
-	<array>
-		<string>UIInterfaceOrientationPortrait</string>
-		<string>UIInterfaceOrientationLandscapeLeft</string>
-		<string>UIInterfaceOrientationLandscapeRight</string>
-	</array>
-	<key>UISupportedInterfaceOrientations~ipad</key>
-	<array>
-		<string>UIInterfaceOrientationPortrait</string>
-		<string>UIInterfaceOrientationPortraitUpsideDown</string>
-		<string>UIInterfaceOrientationLandscapeLeft</string>
-		<string>UIInterfaceOrientationLandscapeRight</string>
-	</array>
-	<key>UIViewControllerBasedStatusBarAppearance</key>
-	<false/>
+    <key>CADisableMinimumFrameDurationOnPhone</key>
+    <true/>
+    <key>CFBundleDevelopmentRegion</key>
+    <string>$(DEVELOPMENT_LANGUAGE)</string>
+    <key>CFBundleDisplayName</key>
+    <string>CathsApp</string>
+    <key>CFBundleExecutable</key>
+    <string>$(EXECUTABLE_NAME)</string>
+    <key>CFBundleIdentifier</key>
+    <string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
+    <key>CFBundleInfoDictionaryVersion</key>
+    <string>6.0</string>
+    <key>CFBundleName</key>
+    <string>oratio_app</string>
+    <key>CFBundlePackageType</key>
+    <string>APPL</string>
+    <key>CFBundleShortVersionString</key>
+    <string>$(FLUTTER_BUILD_NAME)</string>
+    <key>CFBundleSignature</key>
+    <string>????</string>
+    <key>CFBundleVersion</key>
+    <string>$(FLUTTER_BUILD_NUMBER)</string>
+    <key>LSRequiresIPhoneOS</key>
+    <true/>
+    <key>NSBluetoothAlwaysUsageDescription</key>
+    <string>CathsApp uses Bluetooth to connect to wireless headphones and speakers, allowing you to make high-quality voice and video calls through your preferred audio devices.</string>
+    <key>NSBluetoothPeripheralUsageDescription</key>
+    <string>CathsApp uses Bluetooth to detect and connect to nearby audio devices such as headphones and speakers for better call quality.</string>
+    <key>NSCameraUsageDescription</key>
+    <string>CathsApp needs access to your camera to enable video calling with your contacts and to scan QR codes for quick connections.</string>
+    <key>NSContactsUsageDescription</key>
+    <string>CathsApp needs access to your contacts to help you find and connect with friends and family who are already using the app, making it easier to start conversations.</string>
+    <key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+    <string>CathsApp uses your location to show you nearby events, connect you with local users, and provide location-based features to enhance your experience.</string>
+    <key>NSLocationWhenInUseUsageDescription</key>
+    <string>CathsApp uses your location while using the app to show you nearby events, connect you with local users, and provide location-based recommendations.</string>
+    <key>NSMicrophoneUsageDescription</key>
+    <string>CathsApp needs access to your microphone to enable voice and video calls with your contacts.</string>
+    <key>NSPhotoLibraryUsageDescription</key>
+    <string>CathsApp needs access to your photo library so you can share photos and videos in your conversations and set a profile picture.</string>
+    <key>UIApplicationSupportsIndirectInputEvents</key>
+    <true/>
+    <key>UIBackgroundModes</key>
+    <array>
+        <string>remote-notification</string>
+    </array>
+    <key>UILaunchStoryboardName</key>
+    <string>LaunchScreen</string>
+    <key>UIMainStoryboardFile</key>
+    <string>Main</string>
+    <key>UIStatusBarHidden</key>
+    <true/>
+    <key>UISupportedInterfaceOrientations</key>
+    <array>
+        <string>UIInterfaceOrientationPortrait</string>
+        <string>UIInterfaceOrientationLandscapeLeft</string>
+        <string>UIInterfaceOrientationLandscapeRight</string>
+    </array>
+    <key>UISupportedInterfaceOrientations~ipad</key>
+    <array>
+        <string>UIInterfaceOrientationPortrait</string>
+        <string>UIInterfaceOrientationPortraitUpsideDown</string>
+        <string>UIInterfaceOrientationLandscapeLeft</string>
+        <string>UIInterfaceOrientationLandscapeRight</string>
+    </array>
+    <key>UIViewControllerBasedStatusBarAppearance</key>
+    <false/>
 </dict>
 </plist>
