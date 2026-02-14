@@ -575,7 +575,8 @@ class _ProfilePageState extends State<ProfilePage> {
     );
   }
 
-  Future<void> _showDeleteAccountDialog(BuildContext context, PocketBase pb) async {
+  Future<void> _showDeleteAccountDialog(
+      BuildContext context, PocketBase pb) async {
     final TextEditingController confirmController = TextEditingController();
     bool isDeleting = false;
 
@@ -655,7 +656,8 @@ class _ProfilePageState extends State<ProfilePage> {
                   ),
                   focusedBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(12),
-                    borderSide: BorderSide(color: Colors.red.shade300, width: 2),
+                    borderSide:
+                        BorderSide(color: Colors.red.shade300, width: 2),
                   ),
                 ),
               ),
@@ -696,7 +698,8 @@ class _ProfilePageState extends State<ProfilePage> {
                         final currentUser = pb.authStore.model as RecordModel;
                         final reportingService = ReportingService(pb);
 
-                        await reportingService.deleteUserAccount(currentUser.id);
+                        await reportingService
+                            .deleteUserAccount(currentUser.id);
 
                         if (context.mounted) {
                           confirmController.dispose();

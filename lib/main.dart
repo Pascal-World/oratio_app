@@ -119,7 +119,6 @@ void main() async {
     MessageModelAdapter(),
   ); // Generate this using build_runner
 
-
   final pref = await SharedPreferences.getInstance();
   final bibleService = BibleReadingService();
   // Update Bible readings if needed

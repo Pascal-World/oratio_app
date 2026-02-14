@@ -107,8 +107,10 @@ class _ChatPageState extends State<ChatPage> with WidgetsBindingObserver {
             final receiverId = message.getStringValue('reciever');
 
             // Process messages for this conversation (both incoming and outgoing)
-            if ((senderId == widget.profile.userId && receiverId == currentUser.id) ||
-                (senderId == currentUser.id && receiverId == widget.profile.userId)) {
+            if ((senderId == widget.profile.userId &&
+                    receiverId == currentUser.id) ||
+                (senderId == currentUser.id &&
+                    receiverId == widget.profile.userId)) {
               // Reload messages silently
               _messageCubit.loadMessages(
                 widget.profile.userId,
@@ -116,8 +118,11 @@ class _ChatPageState extends State<ChatPage> with WidgetsBindingObserver {
               );
 
               // Mark as read if we received it (this also reloads chat list)
-              if (senderId == widget.profile.userId && receiverId == currentUser.id) {
-                context.read<ChatCubit>().markMessagesAsRead(widget.profile.userId);
+              if (senderId == widget.profile.userId &&
+                  receiverId == currentUser.id) {
+                context
+                    .read<ChatCubit>()
+                    .markMessagesAsRead(widget.profile.userId);
               } else {
                 // If it's our own message, just reload chat list
                 context.read<ChatCubit>().loadRecentChats();
@@ -125,7 +130,8 @@ class _ChatPageState extends State<ChatPage> with WidgetsBindingObserver {
             }
           }
         },
-        filter: '(sender = "${widget.profile.userId}" && reciever = "${currentUser.id}") || (sender = "${currentUser.id}" && reciever = "${widget.profile.userId}")',
+        filter:
+            '(sender = "${widget.profile.userId}" && reciever = "${currentUser.id}") || (sender = "${currentUser.id}" && reciever = "${widget.profile.userId}")',
       );
 
       _isSubscribed = true;
@@ -180,7 +186,8 @@ class _ChatPageState extends State<ChatPage> with WidgetsBindingObserver {
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
               ListTile(
-                leading: Icon(Icons.insert_drive_file, color: AppColors.primary),
+                leading:
+                    Icon(Icons.insert_drive_file, color: AppColors.primary),
                 title: const Text('File'),
                 onTap: () {
                   Navigator.pop(context);
@@ -279,7 +286,8 @@ class _ChatPageState extends State<ChatPage> with WidgetsBindingObserver {
               "reciever": _otherUser.id,
             },
             files: [
-              http.MultipartFile.fromBytes('file', fileBytes, filename: fileName)
+              http.MultipartFile.fromBytes('file', fileBytes,
+                  filename: fileName)
             ],
           );
 
@@ -321,9 +329,9 @@ class _ChatPageState extends State<ChatPage> with WidgetsBindingObserver {
 
   void _handleSendPressed(types.PartialText message) {
     _messageCubit.sendMessage(
-          message: message.text,
-          receiverId: widget.profile.userId,
-        );
+      message: message.text,
+      receiverId: widget.profile.userId,
+    );
   }
 
   String? getAvatarUrl() {
@@ -530,7 +538,8 @@ class _ChatPageState extends State<ChatPage> with WidgetsBindingObserver {
                 value: 'block',
                 child: Row(
                   children: [
-                    Icon(FontAwesomeIcons.userSlash, size: 16, color: Colors.orange),
+                    Icon(FontAwesomeIcons.userSlash,
+                        size: 16, color: Colors.orange),
                     SizedBox(width: 12),
                     Text('Block User', style: TextStyle(color: Colors.orange)),
                   ],
@@ -647,7 +656,8 @@ class _ChatPageState extends State<ChatPage> with WidgetsBindingObserver {
             return Chat(
               bubbleBuilder: (child,
                       {required message, required nextMessageInGroup}) =>
-                  CustomBubble(message: message, isUser: message.author == _user),
+                  CustomBubble(
+                      message: message, isUser: message.author == _user),
               messages: messages,
               onAttachmentPressed: _handleAttachmentPressed,
               onMessageTap: _handleMessageTap,
