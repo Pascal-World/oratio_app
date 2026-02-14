@@ -3,7 +3,6 @@ class RouteNames {
   static String annoucementPage = 'annoucements';
   static String shareBiblePassage = 'share-bible-passage';
   static String notifications = 'notifications';
-  static String contacts = 'contacts';
   static String profile = 'profile';
   static String bookRetreat = 'bookRetreat';
   static String bookAppointment = 'bookAppointment';

@@ -31,15 +31,13 @@
     <key>NSBluetoothPeripheralUsageDescription</key>
     <string>CathsApp uses Bluetooth to detect and connect to nearby audio devices such as headphones and speakers for better call quality.</string>
     <key>NSCameraUsageDescription</key>
-    <string>CathsApp needs access to your camera to enable video calling with your contacts and to scan QR codes for quick connections.</string>
-    <key>NSContactsUsageDescription</key>
-    <string>CathsApp needs access to your contacts to help you find and connect with friends and family who are already using the app, making it easier to start conversations.</string>
+    <string>CathsApp needs access to your camera to enable video calling and to scan QR codes for quick connections.</string>
     <key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
     <string>CathsApp uses your location to show you nearby events, connect you with local users, and provide location-based features to enhance your experience.</string>
     <key>NSLocationWhenInUseUsageDescription</key>
     <string>CathsApp uses your location while using the app to show you nearby events, connect you with local users, and provide location-based recommendations.</string>
     <key>NSMicrophoneUsageDescription</key>
-    <string>CathsApp needs access to your microphone to enable voice and video calls with your contacts.</string>
+    <string>CathsApp needs access to your microphone to enable voice and video calls.</string>
     <key>NSPhotoLibraryUsageDescription</key>
     <string>CathsApp needs access to your photo library so you can share photos and videos in your conversations and set a profile picture.</string>
     <key>UIApplicationSupportsIndirectInputEvents</key>

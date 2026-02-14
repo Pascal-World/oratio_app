@@ -134,11 +134,6 @@ class AppRouter {
                   builder: (context, state) => const SearchPage(),
                 ),
                 GoRoute(
-                  path: '/contacts',
-                  name: RouteNames.contacts,
-                  builder: (context, state) => ContactsPage(),
-                ),
-                GoRoute(
                   path: '/createpost',
                   name: RouteNames.createPost,
                   builder: (context, state) => const CreatePostPage(),

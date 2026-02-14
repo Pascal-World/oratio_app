@@ -4,7 +4,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_chat_ui/flutter_chat_ui.dart';
 import 'package:flutter_chat_types/flutter_chat_types.dart' as types;
 import 'package:file_picker/file_picker.dart';
-import 'package:flutter_contacts/contact.dart';
 import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart' as intl;
@@ -16,7 +15,6 @@ import 'package:oratio_app/bloc/chat_cubit/message_cubit.dart';
 import 'package:oratio_app/bloc/profile_cubit/profile_data_cubit.dart';
 import 'package:oratio_app/helpers/functions.dart';
 import 'package:oratio_app/networkProvider/users.dart';
-import 'package:oratio_app/services/contact_service.dart';
 import 'package:oratio_app/services/file_downloader.dart';
 import 'package:oratio_app/ui/pages/video_display_page.dart';
 import 'package:oratio_app/ui/routes/route_names.dart';
@@ -169,35 +167,6 @@ class _ChatPageState extends State<ChatPage> with WidgetsBindingObserver {
     }
   }
 
-  void _handleContactSelection() async {
-    Contact? contact = await ContactService.openDeviceContactPicker();
-
-    if (contact != null) {
-      final contactData = {
-        'first_name': contact.name.first ?? '',
-        'last_name': contact.name.last ?? '',
-        'phone': contact.phones.isNotEmpty
-            ? contact.phones.first.number
-            : 'No phone number',
-        'email': contact.emails.isNotEmpty
-            ? contact.emails.first.address
-            : 'No email',
-      };
-
-      NotificationService.showInfo('Sending contact...');
-      try {
-        contactData["metadata"] = "contact";
-        await _messageCubit.sendMessage(
-              message: jsonEncode(contactData),
-              receiverId: widget.profile.userId,
-            );
-        NotificationService.showSuccess('Contact sent');
-      } catch (e) {
-        NotificationService.showError('Contact send failed');
-      }
-    }
-  }
-
   void _handleAttachmentPressed() {
     showModalBottomSheet<void>(
       context: context,
@@ -216,14 +185,6 @@ class _ChatPageState extends State<ChatPage> with WidgetsBindingObserver {
                 onTap: () {
                   Navigator.pop(context);
                   _handleFileSelection();
-                },
-              ),
-              ListTile(
-                leading: Icon(Icons.contacts, color: AppColors.primary),
-                title: const Text('Contact'),
-                onTap: () {
-                  Navigator.pop(context);
-                  _handleContactSelection();
                 },
               ),
             ],
