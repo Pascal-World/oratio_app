@@ -45,12 +45,13 @@ class ChatService {
         if (msg == '{{file}}') {
           msg = chat.getStringValue('file');
         } else {
-          // HANDLE META MESAGES (like contacts sent etc)
+          // HANDLE META MESSAGES
           try {
             if (jsonDecode(msg) is Map) {
               final metaMessage = jsonDecode(msg) as Map;
-              if (metaMessage['metadata'] == 'contact') {
-                msg = "Contact Info : ${metaMessage['first_name']}";
+              // Legacy support - treat old contact messages as regular messages
+              if (metaMessage['metadata'] != null) {
+                msg = metaMessage.toString();
               }
             }
           } catch (e) {

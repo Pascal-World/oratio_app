@@ -1,7 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_contacts/flutter_contacts.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gap/gap.dart';
@@ -346,28 +345,11 @@ class _ChatScreenState extends State<ChatScreen> {
             borderRadius: BorderRadius.circular(12),
           ),
           onSelected: (value) async {
-            if (value == 'contacts') {
-              if (await FlutterContacts.requestPermission()) {
-                context.pushNamed(RouteNames.contacts);
-              } else {
-                NotificationService.showError(
-                    "Permission to access contacts is needed");
-              }
-            } else if (value == 'blocked') {
+            if (value == 'blocked') {
               context.pushNamed(RouteNames.blockedUsers);
             }
           },
           itemBuilder: (context) => [
-            const PopupMenuItem<String>(
-              value: 'contacts',
-              child: Row(
-                children: [
-                  Icon(FontAwesomeIcons.addressBook, size: 16),
-                  Gap(12),
-                  Text('Contacts'),
-                ],
-              ),
-            ),
             const PopupMenuItem<String>(
               value: 'blocked',
               child: Row(

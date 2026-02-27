@@ -8,7 +8,7 @@ import 'dart:async';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:hive/hive.dart';
-import 'package:oratio_app/models/contact_model.dart';
+
 import 'package:oratio_app/networkProvider/priest_requests.dart';
 import 'package:oratio_app/splash.dart';
 import 'package:oratio_app/ui/widgets/prayer_requests.dart';
@@ -118,7 +118,6 @@ void main() async {
   Hive.registerAdapter(
     MessageModelAdapter(),
   ); // Generate this using build_runner
-  Hive.registerAdapter(ContactModelAdapter());
 
   final pref = await SharedPreferences.getInstance();
   final bibleService = BibleReadingService();

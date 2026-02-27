@@ -3,14 +3,8 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_chat_types/flutter_chat_types.dart' as types;
 import 'package:flutter_chat_ui/flutter_chat_ui.dart';
-import 'package:flutter_contacts/contact.dart';
-import 'package:flutter_contacts/properties/email.dart';
-import 'package:flutter_contacts/properties/name.dart';
-import 'package:flutter_contacts/properties/phone.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
-import 'package:ace_toast/ace_toast.dart';
-import 'package:oratio_app/services/contact_service.dart';
 import 'package:oratio_app/ui/themes.dart';
 import 'package:oratio_app/ui/widgets/audio_message.dart';
 import 'package:video_player/video_player.dart';
@@ -413,41 +407,11 @@ class CustomBubble extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               _buildUserTimestamp(message.createdAt!, isUser),
-              ElevatedButton.icon(
-                onPressed: () => _saveContact(contact),
-                icon: const Icon(Icons.save),
-                label: const Text('Save'),
-                style: ElevatedButton.styleFrom(
-                  foregroundColor: isUser ? AppColors.primary : Colors.white,
-                  backgroundColor: isUser ? Colors.white : AppColors.primary,
-                ),
-              ),
             ],
           ),
         ],
       ),
     );
-  }
-
-  void _saveContact(Map<String, dynamic> contact) async {
-    final firstName = contact['first_name'] ?? '';
-    final lastName = contact['last_name'] ?? '';
-    final phone = contact['phone'] ?? '';
-    final email = contact['email'] ?? '';
-
-    final newContact = Contact(
-      name: Name(first: firstName, last: lastName),
-      displayName: '$firstName $lastName',
-      phones: [Phone(phone, customLabel: '$firstName $lastName')],
-      emails: [Email(email)],
-    );
-
-    try {
-      await newContact.insert();
-      NotificationService.showInfo("Contact saved successfully");
-    } catch (e) {
-      NotificationService.showError("Error saving contact");
-    }
   }
 
   Widget _buildUserTimestamp(int timestamp, bool isUser) {

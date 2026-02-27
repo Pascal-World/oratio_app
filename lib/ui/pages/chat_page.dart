@@ -4,7 +4,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_chat_ui/flutter_chat_ui.dart';
 import 'package:flutter_chat_types/flutter_chat_types.dart' as types;
 import 'package:file_picker/file_picker.dart';
-import 'package:flutter_contacts/contact.dart';
 import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart' as intl;
@@ -16,7 +15,6 @@ import 'package:oratio_app/bloc/chat_cubit/message_cubit.dart';
 import 'package:oratio_app/bloc/profile_cubit/profile_data_cubit.dart';
 import 'package:oratio_app/helpers/functions.dart';
 import 'package:oratio_app/networkProvider/users.dart';
-import 'package:oratio_app/services/contact_service.dart';
 import 'package:oratio_app/services/file_downloader.dart';
 import 'package:oratio_app/ui/pages/video_display_page.dart';
 import 'package:oratio_app/ui/routes/route_names.dart';
@@ -109,8 +107,10 @@ class _ChatPageState extends State<ChatPage> with WidgetsBindingObserver {
             final receiverId = message.getStringValue('reciever');
 
             // Process messages for this conversation (both incoming and outgoing)
-            if ((senderId == widget.profile.userId && receiverId == currentUser.id) ||
-                (senderId == currentUser.id && receiverId == widget.profile.userId)) {
+            if ((senderId == widget.profile.userId &&
+                    receiverId == currentUser.id) ||
+                (senderId == currentUser.id &&
+                    receiverId == widget.profile.userId)) {
               // Reload messages silently
               _messageCubit.loadMessages(
                 widget.profile.userId,
@@ -118,8 +118,11 @@ class _ChatPageState extends State<ChatPage> with WidgetsBindingObserver {
               );
 
               // Mark as read if we received it (this also reloads chat list)
-              if (senderId == widget.profile.userId && receiverId == currentUser.id) {
-                context.read<ChatCubit>().markMessagesAsRead(widget.profile.userId);
+              if (senderId == widget.profile.userId &&
+                  receiverId == currentUser.id) {
+                context
+                    .read<ChatCubit>()
+                    .markMessagesAsRead(widget.profile.userId);
               } else {
                 // If it's our own message, just reload chat list
                 context.read<ChatCubit>().loadRecentChats();
@@ -127,7 +130,8 @@ class _ChatPageState extends State<ChatPage> with WidgetsBindingObserver {
             }
           }
         },
-        filter: '(sender = "${widget.profile.userId}" && reciever = "${currentUser.id}") || (sender = "${currentUser.id}" && reciever = "${widget.profile.userId}")',
+        filter:
+            '(sender = "${widget.profile.userId}" && reciever = "${currentUser.id}") || (sender = "${currentUser.id}" && reciever = "${widget.profile.userId}")',
       );
 
       _isSubscribed = true;
@@ -169,35 +173,6 @@ class _ChatPageState extends State<ChatPage> with WidgetsBindingObserver {
     }
   }
 
-  void _handleContactSelection() async {
-    Contact? contact = await ContactService.openDeviceContactPicker();
-
-    if (contact != null) {
-      final contactData = {
-        'first_name': contact.name.first ?? '',
-        'last_name': contact.name.last ?? '',
-        'phone': contact.phones.isNotEmpty
-            ? contact.phones.first.number
-            : 'No phone number',
-        'email': contact.emails.isNotEmpty
-            ? contact.emails.first.address
-            : 'No email',
-      };
-
-      NotificationService.showInfo('Sending contact...');
-      try {
-        contactData["metadata"] = "contact";
-        await _messageCubit.sendMessage(
-              message: jsonEncode(contactData),
-              receiverId: widget.profile.userId,
-            );
-        NotificationService.showSuccess('Contact sent');
-      } catch (e) {
-        NotificationService.showError('Contact send failed');
-      }
-    }
-  }
-
   void _handleAttachmentPressed() {
     showModalBottomSheet<void>(
       context: context,
@@ -211,19 +186,12 @@ class _ChatPageState extends State<ChatPage> with WidgetsBindingObserver {
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
               ListTile(
-                leading: Icon(Icons.insert_drive_file, color: AppColors.primary),
+                leading:
+                    Icon(Icons.insert_drive_file, color: AppColors.primary),
                 title: const Text('File'),
                 onTap: () {
                   Navigator.pop(context);
                   _handleFileSelection();
-                },
-              ),
-              ListTile(
-                leading: Icon(Icons.contacts, color: AppColors.primary),
-                title: const Text('Contact'),
-                onTap: () {
-                  Navigator.pop(context);
-                  _handleContactSelection();
                 },
               ),
             ],
@@ -318,7 +286,8 @@ class _ChatPageState extends State<ChatPage> with WidgetsBindingObserver {
               "reciever": _otherUser.id,
             },
             files: [
-              http.MultipartFile.fromBytes('file', fileBytes, filename: fileName)
+              http.MultipartFile.fromBytes('file', fileBytes,
+                  filename: fileName)
             ],
           );
 
@@ -360,9 +329,9 @@ class _ChatPageState extends State<ChatPage> with WidgetsBindingObserver {
 
   void _handleSendPressed(types.PartialText message) {
     _messageCubit.sendMessage(
-          message: message.text,
-          receiverId: widget.profile.userId,
-        );
+      message: message.text,
+      receiverId: widget.profile.userId,
+    );
   }
 
   String? getAvatarUrl() {
@@ -569,7 +538,8 @@ class _ChatPageState extends State<ChatPage> with WidgetsBindingObserver {
                 value: 'block',
                 child: Row(
                   children: [
-                    Icon(FontAwesomeIcons.userSlash, size: 16, color: Colors.orange),
+                    Icon(FontAwesomeIcons.userSlash,
+                        size: 16, color: Colors.orange),
                     SizedBox(width: 12),
                     Text('Block User', style: TextStyle(color: Colors.orange)),
                   ],
@@ -686,7 +656,8 @@ class _ChatPageState extends State<ChatPage> with WidgetsBindingObserver {
             return Chat(
               bubbleBuilder: (child,
                       {required message, required nextMessageInGroup}) =>
-                  CustomBubble(message: message, isUser: message.author == _user),
+                  CustomBubble(
+                      message: message, isUser: message.author == _user),
               messages: messages,
               onAttachmentPressed: _handleAttachmentPressed,
               onMessageTap: _handleMessageTap,

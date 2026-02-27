@@ -314,15 +314,6 @@ class _ProfilePageState extends State<ProfilePage> {
                           ],
                         ),
                         _buildSection(
-                          "Contact Information",
-                          FontAwesomeIcons.addressBook,
-                          [
-                            _buildContactItem(
-                                data.contact, context, data.userId),
-                            // _buildAddButton("Add Contact Information"),
-                          ],
-                        ),
-                        _buildSection(
                           "Select Language",
                           FontAwesomeIcons.language,
                           [
@@ -489,40 +480,6 @@ class _ProfilePageState extends State<ProfilePage> {
     );
   }
 
-  Widget _buildContactItem(
-      String contact, BuildContext context, String profileId) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 12),
-      child: Row(
-        children: [
-          Expanded(
-            child: Text(
-              contact.isNotEmpty ? contact : 'Add contact',
-              style: TextStyle(
-                  fontSize: 16,
-                  color: contact.isNotEmpty
-                      ? const Color(0xFF4A4A4A)
-                      : Colors.black.withOpacity(0.3),
-                  fontStyle: contact.isNotEmpty ? null : FontStyle.italic),
-            ),
-          ),
-          TextButton(
-            onPressed: () async {
-              context.pushNamed(RouteNames.editprofile);
-            },
-            child: const Text(
-              "Edit",
-              style: TextStyle(
-                color: Color(0xFF6C63FF),
-                fontWeight: FontWeight.w500,
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
   Widget _buildLanguageItem(String language) {
     return Row(
       children: [
@@ -549,20 +506,6 @@ class _ProfilePageState extends State<ProfilePage> {
           ),
         ),
       ],
-    );
-  }
-
-  Widget _buildAddButton(String text) {
-    return TextButton(
-      onPressed: () {},
-      child: Text(
-        text,
-        style: const TextStyle(
-          color: Color(0xFF6C63FF),
-          fontSize: 16,
-          fontWeight: FontWeight.w500,
-        ),
-      ),
     );
   }
 
@@ -632,7 +575,8 @@ class _ProfilePageState extends State<ProfilePage> {
     );
   }
 
-  Future<void> _showDeleteAccountDialog(BuildContext context, PocketBase pb) async {
+  Future<void> _showDeleteAccountDialog(
+      BuildContext context, PocketBase pb) async {
     final TextEditingController confirmController = TextEditingController();
     bool isDeleting = false;
 
@@ -712,7 +656,8 @@ class _ProfilePageState extends State<ProfilePage> {
                   ),
                   focusedBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(12),
-                    borderSide: BorderSide(color: Colors.red.shade300, width: 2),
+                    borderSide:
+                        BorderSide(color: Colors.red.shade300, width: 2),
                   ),
                 ),
               ),
@@ -753,7 +698,8 @@ class _ProfilePageState extends State<ProfilePage> {
                         final currentUser = pb.authStore.model as RecordModel;
                         final reportingService = ReportingService(pb);
 
-                        await reportingService.deleteUserAccount(currentUser.id);
+                        await reportingService
+                            .deleteUserAccount(currentUser.id);
 
                         if (context.mounted) {
                           confirmController.dispose();
