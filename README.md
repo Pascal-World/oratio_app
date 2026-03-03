@@ -202,3 +202,8 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 }
 ```
+
+
+## Privacy Policy
+
+_"To facilitate social connections, we may upload phone numbers from your address book to our servers. This is done solely to match you with existing users of the service. Non-matching phone numbers are [discarded/anonymized] immediately after the matching process is complete."_
