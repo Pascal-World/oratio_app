@@ -28,7 +28,7 @@ require File.expand_path(File.join('packages', 'flutter_tools', 'bin', 'podhelpe
 flutter_ios_podfile_setup
 
 target 'Runner' do
-  use_frameworks!
+  use_frameworks! :linkage => :static
   use_modular_headers!
 
   flutter_install_all_ios_pods File.dirname(File.realpath(__FILE__))
@@ -40,9 +40,11 @@ end
 post_install do |installer|
   installer.pods_project.targets.each do |target|
     flutter_additional_ios_build_settings(target)
-    # Add this block:
     target.build_configurations.each do |config|
       config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '14.0'
+      # Required for Objective-C static libraries (SDWebImage, SwiftyGif, PromisesObjC)
+      # to correctly load ObjC categories at runtime when using static linkage
+      config.build_settings['OTHER_LDFLAGS'] ||= ['$(inherited)', '-ObjC']
     end
   end
 end
